@@ -1,44 +1,127 @@
-<!-- Event Block: Valorant -->
-<div class="event-box" onclick="openPopup('popup-valorant')" data-keywords="valorant fps gaming esports one shot nirvana">
-  <h3>ONE SHOT TO NIRVANA – VALORANT</h3>
-  <p><strong>Date:</strong> Nov 7, 2025</p>
-  <p><strong>Time:</strong> 11:00 AM</p>
-  <p><strong>Fee:</strong> ₹250</p>
-  <button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-valorant')">Register Now</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo Strip Preview</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad390);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+    }
 
-<!-- Popup: Valorant -->
-<div class="popup-overlay" id="popup-valorant">
-  <div class="popup">
-    <h4>ONE SHOT TO NIRVANA – VALORANT</h4>
-    <p><strong>Theme:</strong> Step into the arena where every shot matters and every move defines your legend. Coordinate, aim, and outplay your opponents in this pulse-pounding test of precision and teamwork.</p>
-    <p><strong>Rules:</strong><br>
-      • One team per participant<br>
-      • No ESP, bots, auto aimbots, or foul language<br>
-      • Prelims: BO1 single elimination with random seeding<br>
-      • Finals: BO3 single elimination<br>
-      • Match mode: Unrated<br>
-      • Agent bans and map picks allowed<br>
-      • Team size: 5 players<br>
-      • Match time: 1 hour<br>
-      • Rounds: Prelims, QF, SF, Finals<br>
-      • Bring your own gear (laptops, earphones, etc.)<br>
-      • College provides internet
-    </p>
-    <p><strong>Stars:</strong> ⭐⭐⭐⭐⭐</p>
-    <p><strong>Prize:</strong><br>
-      1st: ₹1500<br>
-      2nd: ₹1000
-    </p>
-    <p><strong>Venue:</strong> CSE Labs (208)</p>
-    <p><strong>Teams:</strong> 2 per cluster</p>
-    <p><strong>Contacts:</strong><br>
-      Varun – 9353148133<br>
-      Pratham – 8792480999
-    </p>
-    <div class="popup-buttons">
-      <button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-      <button class="close-btn" onclick="closePopup('popup-valorant')">Close</button>
-    </div>
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .logo-strip {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .logo-strip::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -150px;
+      width: 150px;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+      animation: shimmer 2.5s infinite;
+      z-index: 0;
+    }
+
+    .logo-strip img {
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(5px) scale(0.95);
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+
+    /* Side logos smaller */
+    .logo-strip img.side {
+      height: 40px;
+      max-width: 80px;
+      border-radius: 6px;
+    }
+
+    /* Center logo bigger */
+    .logo-strip img.center {
+      height: 55px;
+      max-width: 160px;
+      border-radius: 10px;
+    }
+
+    .logo-strip img:nth-child(1) { animation-delay: 0.2s; }
+    .logo-strip img:nth-child(2) { animation-delay: 0.4s; }
+    .logo-strip img:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes shimmer {
+      0% { left: -150px; }
+      100% { left: 100%; }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+      .logo-strip {
+        gap: 8px;
+        padding: 8px;
+      }
+
+      .logo-strip img.side {
+        height: 35px;
+        max-width: 70px;
+      }
+
+      .logo-strip img.center {
+        height: 50px;
+        max-width: 140px;
+      }
+    }
+
+    /* Demo content */
+    .content {
+      padding: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Glassmorphic Logo Strip -->
+  <div class="logo-strip">
+    <img src="https://res.cloudinary.com/duslhfphv/image/upload/v1760207372/RNS_LOGO_BLACK_lt1usd.png" alt="Logo 1" class="side">
+    <img src="https://res.cloudinary.com/duslhfphv/image/upload/v1760207373/RNSIT_Header_Nobg_apapg6.png" alt="Logo 3" class="center">
+    <img src="https://res.cloudinary.com/duslhfphv/image/upload/v1760207372/Dr._RN_Shetty_white_navwoo.png" alt="Logo 2" class="side">
   </div>
-</div>
+
+  <!-- Example content -->
+  <div class="content">
+    <h1>Welcome to Nirvana Fest</h1>
+    <p>This is where your main hero section or event details will shine.</p>
+  </div>
+
+</body>
+</html>
