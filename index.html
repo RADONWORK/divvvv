@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="">
 
@@ -187,6 +188,67 @@ html, body {
 			color: #1e0e4b
 		}
 	</style>
+
+<style>
+/* --- Overrides to ensure the background video/image covers and is centered --- */
+html, body {
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  overflow-x: hidden !important;
+}
+
+/* Ensure the main container fills viewport */
+.bee-page-container {
+  min-height: 100vh !important;
+  height: 100% !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Make the video truly cover the viewport and stay centered */
+.bee-background-video-container {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+
+.bee-background-video-container video {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+/* Remove unexpected black margins at the bottom by ensuring page content does not create extra height */
+body > .bee-page-container > .bee-row-content {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Ensure no stray body styles from embedded fragments override the layout */
+body * {
+  box-sizing: border-box;
+}
+
+/* Keep glass background behind content */
+.glass-bg { z-index: 0 !important; }
+</style>
+
 </head>
 
 <body>
@@ -573,15 +635,15 @@ html, body {
 							}
 						</style>
 						<!-- Event Box with Search Keywords -->
-						<div class="event-box" data-keywords="group dance choreography crew western contemporary" onclick="openPopup()">
+						<div class="event-box" data-keywords="group dance choreography crew western contemporary" onclick="openPopup('popup-groupdance')">
 							<h3>Group Dance</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 2:00 PM</p>
 							<p><strong>Fee:</strong> ₹500</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup()">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-groupdance')">Register Now</button>
 						</div>
 						<!-- Popup -->
-						<div class="popup-overlay" id="popup">
+						<div class="popup-overlay" id="popup-groupdance">
 							<div class="popup">
 								<h4>Group Dance – Event Details</h4>
 								<p><strong>Theme:</strong> Bring your crew together and set the stage on fire! Groove, spin, and tell a story with every move.</p>
@@ -606,43 +668,48 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup()">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-groupdance')">Close</button>
 								</div>
 							</div>
 						</div>
-						<script>
-							function openPopup() {
-								document.getElementById('popup').style.display = 'flex';
-							}
+						
+<script>
+function openPopup(id) {
+  const popup = document.getElementById(id);
+  if (popup) popup.style.display = 'flex';
+}
 
-							function closePopup() {
-								const popup = document.getElementById('popup');
-								popup.style.animation = 'fadeOut 0.3s ease forwards';
-								setTimeout(() => {
-									popup.style.display = 'none';
-									popup.style.animation = 'fadeIn 0.4s ease forwards';
-								}, 300);
-							}
+function closePopup(id) {
+  const popup = document.getElementById(id);
+  if (popup) {
+    popup.style.animation = 'fadeOut 0.3s ease forwards';
+    setTimeout(() => {
+      popup.style.display = 'none';
+      popup.style.animation = 'fadeIn 0.4s ease forwards';
+    }, 300);
+  }
+}
 
-							// Optional: Search filter logic (for later use)
-							function filterEvents(searchTerm) {
-								const boxes = document.querySelectorAll('.event-box');
-								boxes.forEach(box => {
-									const keywords = box.getAttribute('data-keywords') || '';
-									box.style.display = keywords.toLowerCase().includes(searchTerm.toLowerCase()) ? 'block' : 'none';
-								});
-							}
-						</script>
+// Optional: Search filter logic
+function filterEvents(searchTerm) {
+  const boxes = document.querySelectorAll('.event-box');
+  boxes.forEach(box => {
+    const keywords = box.getAttribute('data-keywords') || '';
+    box.style.display = keywords.toLowerCase().includes(searchTerm.toLowerCase()) ? 'block' : 'none';
+  });
+}
+</script>
+
 					</div>
 					<div class="bee-block bee-block-4 bee-html-block">
-						<div class="event-box" data-keywords="nukkad natak street play drama social awareness hindi kannada english" onclick="openPopup()">
+						<div class="event-box" data-keywords="nukkad natak street play drama social awareness hindi kannada english" onclick="openPopup('popup-nukkadnatakstreetplay')">
 							<h3>NUKKAD NATAK (STREET PLAY)</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 11:30 AM</p>
 							<p><strong>Fee:</strong> ₹500</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup()">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-nukkadnatakstreetplay')">Register Now</button>
 						</div>
-						<div class="popup-overlay" id="popup">
+						<div class="popup-overlay" id="popup-nukkadnatakstreetplay">
 							<div class="popup">
 								<h4>Nukkad Natak – Event Details</h4>
 								<p><strong>Theme:</strong> Take the streets to the stage! Share powerful stories, spark awareness, and entertain with energy, emotion, and creativity.</p>
@@ -670,21 +737,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup()">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-nukkadnatakstreetplay')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-5 bee-html-block"><!-- Event Block: Fashion Show -->
-						<div class="event-box" data-keywords="fashion show ramp walk style costume choreography" onclick="openPopup('popup-fashion')">
+						<div class="event-box" data-keywords="fashion show ramp walk style costume choreography" onclick="openPopup('popup-fashionshow')">
 							<h3>Fashion Show</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 3:00 PM</p>
 							<p><strong>Fee:</strong> ₹1000</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-fashion')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-fashionshow')">Register Now</button>
 						</div>
 						<!-- Popup: Fashion Show -->
-						<div class="popup-overlay" id="popup-fashion">
+						<div class="popup-overlay" id="popup-fashionshow">
 							<div class="popup">
 								<h4>Fashion Show – Event Details</h4>
 								<p><strong>Theme:</strong> Strut, pose, and dazzle like a star! Walk the ramp with style and flair, showing off creativity, costume, and confidence.</p>
@@ -709,21 +776,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-fashion')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-fashionshow')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-6 bee-html-block"><!-- Event Block: WARBORN BGMI -->
-						<div class="event-box" data-keywords="bgmi warborn gaming esports battle royale" onclick="openPopup('popup-bgmi')">
+						<div class="event-box" data-keywords="bgmi warborn gaming esports battle royale" onclick="openPopup('popup-warbornthebgmishowdown')">
 							<h3>WARBORN: The BGMI Showdown</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 11:00 AM</p>
 							<p><strong>Fee:</strong> ₹200</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-bgmi')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-warbornthebgmishowdown')">Register Now</button>
 						</div>
 						<!-- Popup: WARBORN BGMI -->
-						<div class="popup-overlay" id="popup-bgmi">
+						<div class="popup-overlay" id="popup-warbornthebgmishowdown">
 							<div class="popup">
 								<h4>WARBORN: The BGMI Showdown – Event Details</h4>
 								<p><strong>Theme:</strong> Dive into the chaos where strategy meets skill! Team up, aim true, and dominate the battleground to claim victory.</p>
@@ -752,21 +819,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-bgmi')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-warbornthebgmishowdown')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-7 bee-html-block"><!-- Event Block: Valorant -->
-						<div class="event-box" data-keywords="valorant fps gaming esports one shot nirvana" onclick="openPopup('popup-valorant')">
+						<div class="event-box" data-keywords="valorant fps gaming esports one shot nirvana" onclick="openPopup('popup-oneshottonirvanavalorant')">
 							<h3>ONE SHOT TO NIRVANA – VALORANT</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 11:00 AM</p>
 							<p><strong>Fee:</strong> ₹250</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-valorant')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-oneshottonirvanavalorant')">Register Now</button>
 						</div>
 						<!-- Popup: Valorant -->
-						<div class="popup-overlay" id="popup-valorant">
+						<div class="popup-overlay" id="popup-oneshottonirvanavalorant">
 							<div class="popup">
 								<h4>ONE SHOT TO NIRVANA – VALORANT</h4>
 								<p><strong>Theme:</strong> Step into the arena where every shot matters and every move defines your legend. Coordinate, aim, and outplay your opponents in this pulse-pounding test of precision and teamwork.</p>
@@ -796,21 +863,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-valorant')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-oneshottonirvanavalorant')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-8 bee-html-block"><!-- Event Block: Mock IPL Auction -->
-						<div class="event-box" data-keywords="mock auction cricket ipl bidding team strategy" onclick="openPopup('popup-auction')">
+						<div class="event-box" data-keywords="mock auction cricket ipl bidding team strategy" onclick="openPopup('popup-mockiplauction')">
 							<h3>Mock IPL Auction</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 12:30 PM</p>
 							<p><strong>Fee:</strong> ₹500</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-auction')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-mockiplauction')">Register Now</button>
 						</div>
 						<!-- Popup: Mock IPL Auction -->
-						<div class="popup-overlay" id="popup-auction">
+						<div class="popup-overlay" id="popup-mockiplauction">
 							<div class="popup">
 								<h4>Mock IPL Auction – Event Details</h4>
 								<p><strong>Theme:</strong> Step into the shoes of a franchise owner and bid your way to victory! Build your dream cricket squad, strategize your picks, and watch your team come alive on the auction floor.</p>
@@ -834,21 +901,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-auction')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-mockiplauction')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-9 bee-html-block"><!-- Event Block: Murder Mystery -->
-						<div class="event-box" data-keywords="murder mystery detective clues suspense team" onclick="openPopup('popup-murder')">
+						<div class="event-box" data-keywords="murder mystery detective clues suspense team" onclick="openPopup('popup-murdermystery')">
 							<h3>Murder Mystery</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 12:30 PM</p>
 							<p><strong>Fee:</strong> ₹200</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-murder')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-murdermystery')">Register Now</button>
 						</div>
 						<!-- Popup: Murder Mystery -->
-						<div class="popup-overlay" id="popup-murder">
+						<div class="popup-overlay" id="popup-murdermystery">
 							<div class="popup">
 								<h4>Murder Mystery – Event Details</h4>
 								<p><strong>Theme:</strong> Put on your detective hat and dive into a world of suspense. Follow the clues, outsmart your rivals, and unravel the dark secrets before time runs out. Every detail counts. Will you catch the killer in time?</p>
@@ -871,7 +938,7 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-murder')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-murdermystery')">Close</button>
 								</div>
 							</div>
 						</div>
@@ -913,15 +980,15 @@ html, body {
 						</div>
 					</div>
 					<div class="bee-block bee-block-11 bee-html-block"><!-- Event Block: Western Vocal Solo -->
-						<div class="event-box" data-keywords="western vocal solo english karaoke singing music" onclick="openPopup('popup-westernvocal')">
+						<div class="event-box" data-keywords="western vocal solo english karaoke singing music" onclick="openPopup('popup-westernvocalsolo')">
 							<h3>Western Vocal Solo</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 10:00 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-westernvocal')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-westernvocalsolo')">Register Now</button>
 						</div>
 						<!-- Popup: Western Vocal Solo -->
-						<div class="popup-overlay" id="popup-westernvocal">
+						<div class="popup-overlay" id="popup-westernvocalsolo">
 							<div class="popup">
 								<h4>Western Vocal Solo – Event Details</h4>
 								<p><strong>Theme:</strong> Step up and sing your favorite English track. Hit the right notes, bring emotion, and make the stage your own. Let your voice shine and connect with the audience.</p>
@@ -942,21 +1009,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-westernvocal')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-westernvocalsolo')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-12 bee-html-block"><!-- Event Block: Classical Vocal Solo -->
-						<div class="event-box" data-keywords="classical vocal solo carnatic hindustani raga music" onclick="openPopup('popup-classicalvocal')">
+						<div class="event-box" data-keywords="classical vocal solo carnatic hindustani raga music" onclick="openPopup('popup-classicalvocalsolo')">
 							<h3>Classical Vocal Solo</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 11:00 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-classicalvocal')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-classicalvocalsolo')">Register Now</button>
 						</div>
 						<!-- Popup: Classical Vocal Solo -->
-						<div class="popup-overlay" id="popup-classicalvocal">
+						<div class="popup-overlay" id="popup-classicalvocalsolo">
 							<div class="popup">
 								<h4>Classical Vocal Solo – Event Details</h4>
 								<p><strong>Theme:</strong> Experience the magic of tradition with your favorite raga. Sing with clarity, control, and feeling, and let every note captivate the audience.</p>
@@ -978,21 +1045,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-classicalvocal')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-classicalvocalsolo')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-13 bee-html-block"><!-- Event Block: Indian Cinema Solo -->
-						<div class="event-box" data-keywords="indian cinema solo singing karaoke bollywood tollywood" onclick="openPopup('popup-indianvocal')">
+						<div class="event-box" data-keywords="indian cinema solo singing karaoke bollywood tollywood" onclick="openPopup('popup-indiancinemasolo')">
 							<h3>Indian Cinema Solo</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 10:00 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-indianvocal')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-indiancinemasolo')">Register Now</button>
 						</div>
 						<!-- Popup: Indian Cinema Solo -->
-						<div class="popup-overlay" id="popup-indianvocal">
+						<div class="popup-overlay" id="popup-indiancinemasolo">
 							<div class="popup">
 								<h4>Indian Cinema Solo – Event Details</h4>
 								<p><strong>Theme:</strong> Bring cinematic energy to the stage. Pick a hit song, sing with confidence and style, and make the audience feel every beat.</p>
@@ -1014,21 +1081,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-indianvocal')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-indiancinemasolo')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-14 bee-html-block"><!-- Event Block: Instrumental Solo -->
-						<div class="event-box" data-keywords="instrumental solo music performance melody accompanist" onclick="openPopup('popup-instrumental')">
+						<div class="event-box" data-keywords="instrumental solo music performance melody accompanist" onclick="openPopup('popup-instrumentalsolo')">
 							<h3>Instrumental Solo</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 11:00 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-instrumental')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-instrumentalsolo')">Register Now</button>
 						</div>
 						<!-- Popup: Instrumental Solo -->
-						<div class="popup-overlay" id="popup-instrumental">
+						<div class="popup-overlay" id="popup-instrumentalsolo">
 							<div class="popup">
 								<h4>Instrumental Solo – Event Details</h4>
 								<p><strong>Theme:</strong> Let your instrument tell your story. Play smooth, flowing music, show your skill, and let the melody speak for itself.</p>
@@ -1051,22 +1118,22 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-instrumental')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-instrumentalsolo')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-15 bee-html-block"></div>
 					<div class="bee-block bee-block-16 bee-html-block"><!-- Event Block: Indian Solo Dance -->
-						<div class="event-box" data-keywords="indian solo dance classical semiclassical rhythm expression" onclick="openPopup('popup-indiandance')">
+						<div class="event-box" data-keywords="indian solo dance classical semiclassical rhythm expression" onclick="openPopup('popup-indiansolodance')">
 							<h3>Indian Solo Dance</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 11:00 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-indiandance')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-indiansolodance')">Register Now</button>
 						</div>
 						<!-- Popup: Indian Solo Dance -->
-						<div class="popup-overlay" id="popup-indiandance">
+						<div class="popup-overlay" id="popup-indiansolodance">
 							<div class="popup">
 								<h4>Indian Solo Dance – Event Details</h4>
 								<p><strong>Theme:</strong> Express yourself through rhythm and grace. Combine movement with expression, whether fast or slow, and end with a powerful pose.</p>
@@ -1090,21 +1157,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-indiandance')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-indiansolodance')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-17 bee-html-block"><!-- Event Block: Western Solo Dance -->
-						<div class="event-box" data-keywords="western solo dance freestyle hiphop jazz performance" onclick="openPopup('popup-westernsolo')">
+						<div class="event-box" data-keywords="western solo dance freestyle hiphop jazz performance" onclick="openPopup('popup-westernsolodance')">
 							<h3>Western Solo Dance</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 2:30 PM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-westernsolo')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-westernsolodance')">Register Now</button>
 						</div>
 						<!-- Popup: Western Solo Dance -->
-						<div class="popup-overlay" id="popup-westernsolo">
+						<div class="popup-overlay" id="popup-westernsolodance">
 							<div class="popup">
 								<h4>Western Solo Dance – Event Details</h4>
 								<p><strong>Theme:</strong> Own the floor with sharp, confident moves. Keep your energy high, stay in sync with the beat, and make your performance unforgettable.</p>
@@ -1128,7 +1195,7 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-westernsolo')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-westernsolodance')">Close</button>
 								</div>
 							</div>
 						</div>
@@ -1172,15 +1239,15 @@ html, body {
 						</div>
 					</div>
 					<div class="bee-block bee-block-19 bee-html-block"><!-- Event Block: Beg Borrow or Steal -->
-						<div class="event-box" data-keywords="beg borrow steal campus hunt challenge team" onclick="openPopup('popup-bbs')">
+						<div class="event-box" data-keywords="beg borrow steal campus hunt challenge team" onclick="openPopup('popup-begborroworsteal')">
 							<h3>Beg Borrow or Steal</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 11:30 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-bbs')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-begborroworsteal')">Register Now</button>
 						</div>
 						<!-- Popup: Beg Borrow or Steal -->
-						<div class="popup-overlay" id="popup-bbs">
+						<div class="popup-overlay" id="popup-begborroworsteal">
 							<div class="popup">
 								<h4>Beg Borrow or Steal – Event Details</h4>
 								<p><strong>Theme:</strong> Fast-paced and full of surprises. Think quickly, persuade creatively, and grab what you need before the clock runs out.</p>
@@ -1206,21 +1273,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-bbs')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-begborroworsteal')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-20 bee-html-block"><!-- Event Block: Otaku Odyssey -->
-						<div class="event-box" data-keywords="anime quiz otaku fandom japan manga trivia" onclick="openPopup('popup-otaku')">
+						<div class="event-box" data-keywords="anime quiz otaku fandom japan manga trivia" onclick="openPopup('popup-otakuodysseyanimequiz')">
 							<h3>Otaku Odyssey – Anime Quiz</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 11:00 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-otaku')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-otakuodysseyanimequiz')">Register Now</button>
 						</div>
 						<!-- Popup: Otaku Odyssey -->
-						<div class="popup-overlay" id="popup-otaku">
+						<div class="popup-overlay" id="popup-otakuodysseyanimequiz">
 							<div class="popup">
 								<h4>Otaku Odyssey – Event Details</h4>
 								<p><strong>Theme:</strong> For the true anime fans. Answer quickly, trust your knowledge, and prove how deep your fandom goes.</p>
@@ -1243,7 +1310,7 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-otaku')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-otakuodysseyanimequiz')">Close</button>
 								</div>
 							</div>
 						</div>
@@ -1324,15 +1391,15 @@ html, body {
 						</div>
 					</div>
 					<div class="bee-block bee-block-23 bee-html-block"><!-- Event Block: Contemporary Dance -->
-						<div class="event-box" data-keywords="contemporary dance duet performance expression timing" onclick="openPopup('popup-contemporary')">
+						<div class="event-box" data-keywords="contemporary dance duet performance expression timing" onclick="openPopup('popup-contemporarydance')">
 							<h3>Contemporary Dance</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 11:30 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-contemporary')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-contemporarydance')">Register Now</button>
 						</div>
 						<!-- Popup: Contemporary Dance -->
-						<div class="popup-overlay" id="popup-contemporary">
+						<div class="popup-overlay" id="popup-contemporarydance">
 							<div class="popup">
 								<h4>Contemporary Dance – Event Details</h4>
 								<p><strong>Theme:</strong> Two dancers, one stage. Match timing, energy, and expression. Move as one and make the performance unforgettable.</p>
@@ -1357,21 +1424,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-contemporary')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-contemporarydance')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-24 bee-html-block"><!-- Event Block: SW3AT T(O) N!RVANA -->
-						<div class="event-box" data-keywords="fitness challenge obstacle team energy motivation" onclick="openPopup('popup-sweatnirvana')">
+						<div class="event-box" data-keywords="fitness challenge obstacle team energy motivation" onclick="openPopup('popup-sw3attonrvanafitnesswitness')">
 							<h3>SW3AT T(O) N!RVANA – Fitness Witness</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 11:30 AM</p>
 							<p><strong>Fee:</strong> ₹200</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-sweatnirvana')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-sw3attonrvanafitnesswitness')">Register Now</button>
 						</div>
 						<!-- Popup: SW3AT T(O) N!RVANA -->
-						<div class="popup-overlay" id="popup-sweatnirvana">
+						<div class="popup-overlay" id="popup-sw3attonrvanafitnesswitness">
 							<div class="popup">
 								<h4>SW3AT T(O) N!RVANA – Event Details</h4>
 								<p><strong>Theme:</strong> Accountability meets energy. Team up, track each other’s progress, and push limits together. Motivation never felt this strong.</p>
@@ -1397,7 +1464,7 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-sweatnirvana')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-sw3attonrvanafitnesswitness')">Close</button>
 								</div>
 							</div>
 						</div>
@@ -1437,15 +1504,15 @@ html, body {
 					</div>
 					<div class="bee-block bee-block-26 bee-html-block"></div>
 					<div class="bee-block bee-block-27 bee-html-block"><!-- Event Block: Venture Vault -->
-						<div class="event-box" data-keywords="venture vault startup pitch shark tank business idea" onclick="openPopup('popup-venturevault')">
+						<div class="event-box" data-keywords="venture vault startup pitch shark tank business idea" onclick="openPopup('popup-venturevaultsharktankedition')">
 							<h3>Venture Vault – Shark Tank Edition</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 11:00 AM</p>
 							<p><strong>Fee:</strong> ₹300</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-venturevault')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-venturevaultsharktankedition')">Register Now</button>
 						</div>
 						<!-- Popup: Venture Vault -->
-						<div class="popup-overlay" id="popup-venturevault">
+						<div class="popup-overlay" id="popup-venturevaultsharktankedition">
 							<div class="popup">
 								<h4>Venture Vault – Event Details</h4>
 								<p><strong>Theme:</strong> Pitch it like a pro. Present your idea with confidence, win the judges over, and see if your startup dream makes the cut.</p>
@@ -1469,21 +1536,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-venturevault')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-venturevaultsharktankedition')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-28 bee-html-block"><!-- Event Block: Debate Me! Maybe -->
-						<div class="event-box" data-keywords="debate argument discussion public speaking rebuttal" onclick="openPopup('popup-debate')">
+						<div class="event-box" data-keywords="debate argument discussion public speaking rebuttal" onclick="openPopup('popup-debatememaybe')">
 							<h3>Debate Me! Maybe</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 12:00 PM</p>
 							<p><strong>Fee:</strong> ₹150</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-debate')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-debatememaybe')">Register Now</button>
 						</div>
 						<!-- Popup: Debate Me! Maybe -->
-						<div class="popup-overlay" id="popup-debate">
+						<div class="popup-overlay" id="popup-debatememaybe">
 							<div class="popup">
 								<h4>Debate Me! Maybe – Event Details</h4>
 								<p><strong>Theme:</strong> Words are your weapon. Build strong arguments, stay sharp, and deliver with confidence. Convince the crowd and claim victory.</p>
@@ -1508,21 +1575,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-debate')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-debatememaybe')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-29 bee-html-block"><!-- Event Block: Where Is Waldo? -->
-						<div class="event-box" data-keywords="where is waldo campus hunt clues riddles mystery" onclick="openPopup('popup-waldo')">
+						<div class="event-box" data-keywords="where is waldo campus hunt clues riddles mystery" onclick="openPopup('popup-whereiswaldo')">
 							<h3>Where Is Waldo?</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 11:00 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-waldo')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-whereiswaldo')">Register Now</button>
 						</div>
 						<!-- Popup: Where Is Waldo? -->
-						<div class="popup-overlay" id="popup-waldo">
+						<div class="popup-overlay" id="popup-whereiswaldo">
 							<div class="popup">
 								<h4>Where Is Waldo? – Event Details</h4>
 								<p><strong>Theme:</strong> Turn the campus into your playground by following clues, cracking riddles, and racing through hidden corners in search of the elusive Waldo.</p>
@@ -1546,21 +1613,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-waldo')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-whereiswaldo')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-30 bee-html-block"><!-- Event Block: The Laugh Lab -->
-						<div class="event-box" data-keywords="laugh lab improv mad ads comedy skit humor" onclick="openPopup('popup-laughlab')">
+						<div class="event-box" data-keywords="laugh lab improv mad ads comedy skit humor" onclick="openPopup('popup-thelaughlabimprovmadads')">
 							<h3>The Laugh Lab – Improv/Mad Ads</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 2:00 PM</p>
 							<p><strong>Fee:</strong> ₹200</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-laughlab')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-thelaughlabimprovmadads')">Register Now</button>
 						</div>
 						<!-- Popup: The Laugh Lab -->
-						<div class="popup-overlay" id="popup-laughlab">
+						<div class="popup-overlay" id="popup-thelaughlabimprovmadads">
 							<div class="popup">
 								<h4>The Laugh Lab – Event Details</h4>
 								<p><strong>Theme:</strong> Step onto the stage and spark laughter. Perform quick-witted skits, deliver clever jokes, or watch hilarious moments that light up the room and leave everyone smiling.</p>
@@ -1586,21 +1653,21 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-laughlab')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-thelaughlabimprovmadads')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-31 bee-html-block"><!-- Event Block: Ethereal Ink – Face Painting -->
-						<div class="event-box" data-keywords="face painting art contrast light dark angel demon yin yang" onclick="openPopup('popup-etherealink')">
+						<div class="event-box" data-keywords="face painting art contrast light dark angel demon yin yang" onclick="openPopup('popup-etherealinkfacepainting')">
 							<h3>Ethereal Ink – Face Painting</h3>
 							<p><strong>Date:</strong> Nov 7, 2025</p>
 							<p><strong>Time:</strong> 11:30 AM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-etherealink')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-etherealinkfacepainting')">Register Now</button>
 						</div>
 						<!-- Popup: Ethereal Ink – Face Painting -->
-						<div class="popup-overlay" id="popup-etherealink">
+						<div class="popup-overlay" id="popup-etherealinkfacepainting">
 							<div class="popup">
 								<h4>Ethereal Ink – Event Details</h4>
 								<p><strong>Theme:</strong> Transform ordinary faces into works of art. Experiment with colors, patterns, and designs that let your creativity shine.</p>
@@ -1624,22 +1691,22 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-etherealink')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-etherealinkfacepainting')">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="bee-block bee-block-32 bee-html-block"></div>
 					<div class="bee-block bee-block-33 bee-html-block"><!-- Event Block: Fandom Moksha -->
-						<div class="event-box" data-keywords="fandom moksha geek quiz movies tv pop culture trivia" onclick="openPopup('popup-fandommoksha')">
+						<div class="event-box" data-keywords="fandom moksha geek quiz movies tv pop culture trivia" onclick="openPopup('popup-fandommokshageekawakening')">
 							<h3>Fandom Moksha – Geek Awakening</h3>
 							<p><strong>Date:</strong> Nov 8, 2025</p>
 							<p><strong>Time:</strong> 2:00 PM</p>
 							<p><strong>Fee:</strong> ₹100</p>
-							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-fandommoksha')">Register Now</button>
+							<button class="register-btn" onclick="event.stopPropagation(); openPopup('popup-fandommokshageekawakening')">Register Now</button>
 						</div>
 						<!-- Popup: Fandom Moksha -->
-						<div class="popup-overlay" id="popup-fandommoksha">
+						<div class="popup-overlay" id="popup-fandommokshageekawakening">
 							<div class="popup">
 								<h4>Fandom Moksha – Event Details</h4>
 								<p><strong>Theme:</strong> Test your pop culture knowledge. Answer fast, compete with fellow fans, and show who really rules the fandom world.</p>
@@ -1663,7 +1730,7 @@ html, body {
 								</p>
 								<div class="popup-buttons">
 									<button class="continue-btn" onclick="window.open('https://payments.billdesk.com/bdcollect/bd/rnsiotec/6052', '_blank')">Yes, Continue</button>
-									<button class="close-btn" onclick="closePopup('popup-fandommoksha')">Close</button>
+									<button class="close-btn" onclick="closePopup('popup-fandommokshageekawakening')">Close</button>
 								</div>
 							</div>
 						</div>
@@ -2001,5 +2068,6 @@ html, body {
 </body>
 
 </html>
+
 
 
