@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logo Strip Only</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parichay Fest Branding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
+      background: #fff;
       font-family: Arial, sans-serif;
-      background: #ffffff;
     }
 
+    /* Logo Strip */
     .logo-strip {
       display: flex;
       justify-content: center;
@@ -18,14 +20,9 @@
       gap: 5%;
       padding: 12px 20px;
       overflow: hidden;
-      position: relative;
-      background-color: transparent;
-      border-bottom: none;
-      box-shadow: none;
     }
 
     .logo-strip img {
-      z-index: 1;
       opacity: 0;
       transform: translateY(5px) scale(0.95);
       animation: fadeUp 0.8s ease-out forwards;
@@ -57,6 +54,73 @@
       }
     }
 
+    /* Nirvana Word */
+    .middle-text {
+      text-align: center;
+      font-size: 3rem;
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 1px;
+      margin: 10px 0 6px;
+      color: #f5c518;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      animation: fadeInText 1.2s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInText {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Parichay Logo */
+    .parichay-logo {
+      width: 100%;
+      text-align: center;
+      padding: 20px 20px 32px;
+    }
+
+    .parichay-logo img {
+      width: 60vw;
+      max-width: 440px;
+      min-width: 140px;
+      height: auto;
+      opacity: 0;
+      animation: glitchFade 2.2s ease-out forwards;
+    }
+
+    @keyframes glitchFade {
+      0% {
+        opacity: 0;
+        transform: scale(0.9);
+        filter: blur(3px);
+      }
+      25% {
+        opacity: 0.4;
+        transform: scale(1.05) translateX(-2px);
+        filter: contrast(1.2);
+      }
+      50% {
+        transform: scale(0.98) translateX(2px);
+        filter: contrast(0.8);
+      }
+      75% {
+        transform: scale(1.02);
+        filter: blur(0.5px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: none;
+      }
+    }
+
+    /* Responsive Tweaks */
     @media (max-width: 600px) {
       .logo-strip {
         gap: 6%;
@@ -72,15 +136,38 @@
         width: 36vw;
         max-width: 180px;
       }
+
+      .parichay-logo img {
+        width: 72vw;
+        max-width: 360px;
+      }
+
+      .middle-text {
+        font-size: 2.4rem;
+        margin: 8px 0 4px;
+      }
+
+      .parichay-logo {
+        padding: 16px 16px 28px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Logo Strip -->
   <div class="logo-strip">
     <img src="https://res.cloudinary.com/duslhfphv/image/upload/v1760207372/RNS_LOGO_BLACK_lt1usd.png" alt="Logo 1" class="side">
     <img src="https://res.cloudinary.com/duslhfphv/image/upload/v1760207373/RNSIT_Header_Nobg_apapg6.png" alt="Logo 3" class="center">
     <img src="https://res.cloudinary.com/duslhfphv/image/upload/v1760207372/Dr._RN_Shetty_white_navwoo.png" alt="Logo 2" class="side">
+  </div>
+
+  <!-- Nirvana Word -->
+  <div class="middle-text">NIRVANA</div>
+
+  <!-- Parichay Logo -->
+  <div class="parichay-logo">
+    <img src="https://res.cloudinary.com/duslhfphv/image/upload/v1760205040/logo_final.png_COPY_2_RESIZED_dywpug.png" alt="Parichay Logo">
   </div>
 
 </body>
