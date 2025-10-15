@@ -249,6 +249,93 @@ body * {
 .glass-bg { z-index: 0 !important; }
 </style>
 
+
+<style>
+/* --- Animation & Interaction Styles (Gen-Z modern, no glow) --- */
+
+/* Smooth default transitions */
+* { transition: all 250ms cubic-bezier(.2,.9,.2,1); -webkit-tap-highlight-color: transparent; }
+
+/* Ensure smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Parallax background layer: we'll move .bee-background-video-container via JS */
+.bee-background-video-container { will-change: transform; }
+
+/* Event card hover: subtle lift and scale */
+.event-box {
+  transform-origin: center;
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms;
+  will-change: transform;
+}
+.event-box:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
+/* Register button micro-interaction */
+.register-btn {
+  transform-origin: center;
+  transition: transform 160ms cubic-bezier(.2,.9,.2,1);
+}
+.register-btn:active { transform: scale(0.98) translateY(1px); }
+
+/* Popup subtle entrance */
+.popup { opacity: 0; transform: translateY(12px) scale(0.995); transition: transform 300ms cubic-bezier(.2,.9,.2,1), opacity 300ms; }
+.popup.open { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Scroll-in animation for event boxes */
+.event-box[data-animated="false"] { opacity: 0; transform: translateY(24px) scale(0.995); }
+.event-box[data-animated="true"] { opacity: 1; transform: translateY(0) scale(1); transition: transform 600ms cubic-bezier(.2,.9,.2,1), opacity 600ms; }
+
+/* Slight stagger container */
+.event-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; align-items: start; }
+
+/* Make popup overlay center properly on smaller screens */
+.popup-overlay { display: none; align-items: center; justify-content: center; padding: 20px; }
+
+/* Reduce motion for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  .event-box:hover { transform: none !important; box-shadow: none !important; }
+}
+
+/* Parallax subtle brightness shift (no glow) */
+.parallax-shift { filter: brightness(0.98); transition: filter 600ms; }
+</style>
+
+
+<!-- NIRVANA: Gen-Z loader & background styles (injected) -->
+<style>
+/* Nirvana loader & background overrides */
+#nirvana-bg{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+#nirvana-bg video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;opacity:0;transition:opacity 1000ms ease, transform 1000ms ease}
+#nirvana-bg .vid-front{z-index:-1}
+#nirvana-bg .vid-mid{z-index:-2}
+#nirvana-bg .vid-back{z-index:-3}
+#nirvana-overlay{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg, rgba(10,10,18,0.14), rgba(12,8,20,0.28))}
+body{overscroll-behavior-y:contain}
+body, html {height:100%}
+body > .bee-page-container {position:relative;z-index:1}
+
+/* Loader */
+#nirvana-loader{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(1200px 400px at 10% 10%, rgba(119,71,255,0.08), transparent), linear-gradient(180deg,#06060a,#000000);color:#fff;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;gap:14px}
+#nirvana-title{font-family:Anton, sans-serif;font-size:42px;letter-spacing:2px;color:#ffd54f;text-shadow:0 6px 24px rgba(119,71,255,0.08)}
+#nirvana-sub{opacity:0.9;font-weight:600}
+#nirvana-bar{width:68vw;max-width:520px;height:14px;background:rgba(255,255,255,0.06);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+#nirvana-fill{height:100%;width:0%;background:linear-gradient(90deg,#7747FF,#f5c518,#00d4ff);border-radius:12px;transform-origin:left;transition:width 220ms linear}
+#nirvana-graphic{width:84px;height:84px;transform-style:preserve-3d;display:block}
+
+/* mobile tweaks */
+@media (max-width:480px){
+  #nirvana-title{font-size:28px}
+  #nirvana-bar{width:82vw;height:12px}
+  #nirvana-graphic{width:56px;height:56px}
+}
+
+/* Remove stray footer gap */
+body > .bee-page-container {padding-bottom:0 !important}
+</style>
 </head>
 
 <body>
@@ -2065,6 +2152,223 @@ function filterEvents(searchTerm) {
 			</div>
 		</div>
 	</div>
+
+<script>
+// Lightweight interactivity: parallax, intersection observer animations, popup enhancements
+
+(function() {
+  // Parallax: move background slightly slower than scroll
+  const bg = document.querySelector('.bee-background-video-container');
+  if (bg) {
+    window.addEventListener('scroll', () => {
+      // throttle using requestAnimationFrame
+      if (bg._ticking) return;
+      bg._ticking = true;
+      requestAnimationFrame(() => {
+        const scrolled = window.scrollY || window.pageYOffset;
+        // move up to 18% of scroll for subtle effect
+        const y = scrolled * -0.18;
+        bg.style.transform = `translate3d(0, ${y}px, 0)`;
+        bg._ticking = false;
+      });
+    }, { passive: true });
+  }
+
+  // Scroll-in animations for event boxes (IntersectionObserver)
+  const boxes = document.querySelectorAll('.event-box');
+  const ioOptions = { root: null, rootMargin: '0px', threshold: 0.12 };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting) {
+        el.setAttribute('data-animated', 'true');
+        // slight stagger using dataset index
+        io.unobserve(el);
+      }
+    });
+  }, ioOptions);
+  boxes.forEach((b, i) => { b.setAttribute('data-animated', 'false'); io.observe(b); });
+
+  // Enhance popup open/close to add class-driven animations and close on overlay click / Esc key
+  window.openPopup = function(id) {
+    const popupOverlay = document.getElementById(id);
+    if (!popupOverlay) return;
+    popupOverlay.style.display = 'flex';
+    // ensure popup's .popup gets class open after next frame for transition
+    const popup = popupOverlay.querySelector('.popup');
+    if (popup) {
+      requestAnimationFrame(() => popup.classList.add('open'));
+    }
+    // lock body scrolling while popup open
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    // close on overlay click (but not when clicking popup)
+    popupOverlay.addEventListener('click', function onOuterClick(e) {
+      if (e.target === popupOverlay) { closePopup(id); popupOverlay.removeEventListener('click', onOuterClick); }
+    });
+  };
+
+  window.closePopup = function(id) {
+    const popupOverlay = document.getElementById(id);
+    if (!popupOverlay) return;
+    const popup = popupOverlay.querySelector('.popup');
+    if (popup) popup.classList.remove('open');
+    // give time for animation then hide
+    setTimeout(() => {
+      popupOverlay.style.display = 'none';
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }, 260);
+  };
+
+  // Close on ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      // find any visible popup-overlay and close it
+      document.querySelectorAll('.popup-overlay').forEach(ov => {
+        if (ov.style.display === 'flex') {
+          const id = ov.id; if (id) closePopup(id);
+        }
+      });
+    }
+  });
+
+  // Button press micro-interaction: add class for active then remove after animation
+  document.addEventListener('pointerdown', function(e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    btn.classList.add('pressed');
+  });
+  document.addEventListener('pointerup', function(e) {
+    document.querySelectorAll('button.pressed').forEach(b => b.classList.remove('pressed'));
+  });
+
+  // Add subtle parallax class changes on scroll for brightness tweaks
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const sc = window.scrollY || window.pageYOffset;
+    document.querySelectorAll('.parallax-shift').forEach(el => {
+      const depth = el.dataset.depth ? parseFloat(el.dataset.depth) : 0.02;
+      const shift = Math.min(1, Math.abs(sc - lastScroll) / 800) * depth;
+      el.style.filter = `brightness(${1 - shift})`;
+    });
+    lastScroll = sc;
+  }, { passive: true });
+
+})();
+</script>
+
+
+<!-- NIRVANA: Background videos (injected) -->
+<div id="nirvana-bg" aria-hidden="true">
+  <video class="vid-back" src="https://54085c3b83.imgdist.com/pub/bfra/miczdxvn/ure/nnv/74w/Animated_Webpage_Waves_Background.mp4" autoplay muted loop playsinline preload="auto" crossorigin="anonymous"></video>
+  <video class="vid-mid" src="https://res.cloudinary.com/duslhfphv/video/upload/v1760553624/lv_0_20251016000428_ozeanv.mp4" autoplay muted loop playsinline preload="auto" crossorigin="anonymous"></video>
+  <video class="vid-front" src="https://res.cloudinary.com/duslhfphv/video/upload/v1760549076/backgeound_video_noowqo.mp4" autoplay muted loop playsinline preload="auto" crossorigin="anonymous"></video>
+</div>
+<div id="nirvana-overlay" aria-hidden="true"></div>
+
+<!-- NIRVANA: Loader -->
+<div id="nirvana-loader" role="status" aria-live="polite">
+  <div id="nirvana-graphic" aria-hidden="true">
+    <!-- decorative cube made with CSS will be animated via JS -->
+  </div>
+  <div id="nirvana-title">Loading NIRVANA</div>
+  <div id="nirvana-sub">Setting the vibe…</div>
+  <div id="nirvana-bar"><div id="nirvana-fill"></div></div>
+</div>
+
+<script>
+(function(){
+  const vids = Array.from(document.querySelectorAll('#nirvana-bg video'));
+  const loader = document.getElementById('nirvana-loader');
+  const fill = document.getElementById('nirvana-fill');
+
+  // progressive fake loading until resources ready
+  let progress = 0;
+  const tick = setInterval(()=> {
+    progress = Math.min(92, progress + Math.random()*6 + 2);
+    fill.style.width = Math.round(progress) + '%';
+  }, 160);
+
+  function finalize(){
+    clearInterval(tick);
+    fill.style.width = '100%';
+    // fade loader out
+    setTimeout(()=> {
+      loader.style.transition = 'opacity 700ms ease';
+      loader.style.opacity = 0;
+      loader.addEventListener('transitionend', ()=> loader.remove(), {once:true});
+    }, 420);
+  }
+
+  // finalize when window loads and at least one video canplay
+  window.addEventListener('load', ()=>{
+    const can = vids.some(v=> v && v.readyState >= 3);
+    if(can){ finalize(); } else {
+      // wait for first playable
+      let handled=false;
+      vids.forEach(v=>{
+        v.addEventListener('canplay', ()=>{ if(!handled){ handled=true; finalize(); } }, {once:true});
+      });
+      // fallback after 6s
+      setTimeout(()=>{ if(!document.body.contains(loader)) return; finalize(); }, 6000);
+    }
+  });
+
+  // quick click to skip
+  loader.addEventListener('click', finalize);
+
+  // background blend on scroll
+  function updateBlend(){
+    const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    const vh = window.innerHeight;
+    const norm = docHeight <= vh ? 0 : Math.min(1, window.scrollY / (docHeight - vh));
+    // thresholds for smooth cinematic blend
+    const oBack = Math.max(0.06, 1 - Math.max(0, (norm - 0.25)/0.6));
+    const oMid = Math.max(0.06, Math.min(1, (norm - 0.05)/0.6));
+    const oFront = Math.max(0.06, Math.min(1, (norm - 0.4)/0.6));
+    const layers = {back:oBack, mid:oMid, front:oFront};
+    vids.forEach(v=>{
+      if(v.classList.contains('vid-back')) v.style.opacity = layers.back;
+      if(v.classList.contains('vid-mid')) v.style.opacity = layers.mid;
+      if(v.classList.contains('vid-front')) v.style.opacity = layers.front;
+      // subtle parallax translate
+      const idx = v.classList.contains('vid-back')?0:(v.classList.contains('vid-mid')?1:2);
+      const translate = Math.round(norm*30/(idx+1));
+      v.style.transform = `translate(-50%,-50%) translateY(${translate}px)`;
+    });
+  }
+  window.addEventListener('scroll', updateBlend, {passive:true});
+  window.addEventListener('resize', updateBlend);
+  setTimeout(updateBlend, 400);
+
+  // small animated cube inside #nirvana-graphic using CSS boxes
+  const g = document.getElementById('nirvana-graphic');
+  if(g){
+    g.style.position='relative';
+    const cube = document.createElement('div');
+    cube.style.width='100%'; cube.style.height='100%'; cube.style.transformStyle='preserve-3d'; cube.style.position='absolute';
+    cube.style.left='0'; cube.style.top='0';
+    cube.className='n-cube';
+    g.appendChild(cube);
+    ['front','back','left','right','top','bottom'].forEach((f)=>{
+      const face = document.createElement('div');
+      face.className='n-face n-'+f;
+      face.style.position='absolute';
+      face.style.inset='0';
+      face.style.borderRadius='6px';
+      face.style.background='linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.05))';
+      face.style.border='1px solid rgba(255,255,255,0.04)';
+      cube.appendChild(face);
+    });
+    let a=0;
+    (function spin(){ a+=0.9; cube.style.transform = `rotateX(${a/2}deg) rotateY(${a}deg)`; requestAnimationFrame(spin); })();
+  }
+
+})();
+</script>
+
+<!-- end NIRVANA injection -->
 </body>
 
 </html>
