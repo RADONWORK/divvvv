@@ -111,8 +111,10 @@
     /* Parichay Logo */
     .parichay-logo {
       width: 100%;
-      text-align: center;
       padding: 20px 20px 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .parichay-logo img {
@@ -122,8 +124,6 @@
       height: auto;
       opacity: 0;
       animation: glitchFade 2.2s ease-out forwards;
-      display: block;
-      margin: 0 auto 0 32.4vw; /* slight left nudge */
     }
 
     @keyframes glitchFade {
@@ -172,8 +172,6 @@
       .parichay-logo img {
         width: 72vw;
         max-width: 360px;
-        margin: 0 auto 0 -2vw;
-        display: block;
       }
 
       .middle-text {
