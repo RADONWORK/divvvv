@@ -415,56 +415,154 @@ body > .bee-page-container {position:relative;z-index:1}
 body > .bee-page-container {padding-bottom:0 !important}
 </style>
 <!-- Points Table Popup Styles -->
+<!-- Points Table Popup Styles -->
 <style>
+  /* Apple‑inspired trigger button */
   .glass-button {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
     font-weight: 600;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
     cursor: pointer;
     color: #fff;
-    background: linear-gradient(270deg, #00ffe0, #0077ff, #6e00ff, #00ffe0);
-    background-size: 600% 600%;
-    animation: gradientShift 8s ease infinite;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    background: rgba(255, 255, 255, 0.08); /* subtle frosted look */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25),
+                inset 0 0 0 0.5px rgba(255,255,255,0.4);
+    transition: all 0.25s ease;
   }
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3),
+                inset 0 0 0 0.5px rgba(255,255,255,0.5);
   }
+  .glass-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25),
+                inset 0 0 0 0.5px rgba(255,255,255,0.4);
+  }
+
+  /* Popup overlay */
   .popup-overlay {
     position: fixed; inset: 0;
     display: none; place-items: center;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(10px);
     z-index: 1000;
   }
   .popup-overlay.active { display: grid; }
+
+  /* Popup content */
   .popup-content {
-    width: 90%; max-width: 420px; max-height: 80vh;
-    overflow-y: auto; border-radius: 20px;
+    width: 90%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 20px;
     border: 1px solid rgba(255,255,255,0.2);
-    background: linear-gradient(135deg, #0f1c2e, #1a2b3f, #003344);
-    box-shadow: 0 0 20px rgba(0,255,255,0.2), 0 12px 36px rgba(0,0,0,0.6);
-    padding: 20px; color: #fff; font-weight: 600;
+    background: rgba(20,20,20,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    padding: 24px;
+    color: #fff;
+    font-weight: 500;
+    animation: popupIn 0.35s ease-out;
   }
+  @keyframes popupIn {
+    from { transform: scale(0.96) translateY(10px); opacity: 0; }
+    to   { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  /* Headings */
   .popup-content h2 {
-    text-align: center; font-size: 1.6rem; font-weight: 800;
-    background: linear-gradient(90deg, #00ffe0, #6e00ff);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
+    color: #fff;
   }
-  .tagline { text-align: center; font-size: 0.95rem; color: #a8f5ff; margin-bottom: 1rem; }
-  .star-block { background: rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
-  .star-block h3 { text-align: center; color: #00f0ff; margin-bottom: 0.5rem; }
+  .tagline {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #a8f5ff;
+    margin-bottom: 1rem;
+  }
+
+  /* Star blocks */
+  .star-block {
+    background: rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .star-block h3 {
+    text-align: center;
+    color: #00f0ff;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  /* Table */
   table { width: 100%; border-collapse: collapse; }
-  th, td { padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.2); font-weight: 600; }
+  th, td {
+    padding: 0.6rem;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
   .rank-line { display: flex; align-items: center; gap: 8px; }
-  .medal { font-size: 1.4rem; display: inline-block; animation: floatMedal 2.5s ease-in-out infinite; }
-  @keyframes floatMedal { 0%{transform:translateY(0);}50%{transform:translateY(-4px);}100%{transform:translateY(0);} }
-  .close-btn { margin-top: 1rem; width: 100%; padding: 0.8rem; background: linear-gradient(270deg,#00ffe0,#0077ff); border:none; border-radius:12px; font-weight:700; cursor:pointer; }
+
+  /* Medals */
+  .medal {
+    font-size: 1.4rem;
+    display: inline-block;
+    animation: floatMedal 2.5s ease-in-out infinite;
+  }
+  @keyframes floatMedal {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0); }
+  }
+
+  /* Close button styled like Apple secondary button */
+  .close-btn {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 0.9rem;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .close-btn:hover {
+    background: rgba(255,255,255,0.18);
+    transform: translateY(-1px);
+  }
+  .close-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: 600px) {
+    .popup-content {
+      width: 95%;
+      max-width: none;
+      font-size: 1rem;
+      padding: 1.2rem;
+      max-height: 90vh;
+    }
+    .popup-content h2 { font-size: 1.3rem; }
+    .star-block h3 { font-size: 1rem; }
+    th, td { font-size: 0.9rem; }
+  }
 </style>
 <!-- Points Table Popup Mobile Overrides -->
 <style>
@@ -2696,6 +2794,7 @@ function filterEvents(searchTerm) {
 </body>
 
 </html>
+
 
 
 
