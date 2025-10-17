@@ -466,6 +466,28 @@ body > .bee-page-container {padding-bottom:0 !important}
   @keyframes floatMedal { 0%{transform:translateY(0);}50%{transform:translateY(-4px);}100%{transform:translateY(0);} }
   .close-btn { margin-top: 1rem; width: 100%; padding: 0.8rem; background: linear-gradient(270deg,#00ffe0,#0077ff); border:none; border-radius:12px; font-weight:700; cursor:pointer; }
 </style>
+<!-- Points Table Popup Mobile Overrides -->
+<style>
+  @media (max-width: 600px) {
+    .popup-content {
+      width: 95%;       /* stretch wider on phones */
+      max-width: none;  /* remove desktop cap */
+      font-size: 1rem;  /* bump text size */
+      padding: 1.2rem;  /* more breathing room */
+      max-height: 90vh; /* taller on mobile */
+    }
+    .popup-content h2 {
+      font-size: 1.4rem;
+    }
+    .star-block h3 {
+      font-size: 1.1rem;
+    }
+    th, td {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
 </head>
 
 <body>
@@ -2674,6 +2696,7 @@ function filterEvents(searchTerm) {
 </body>
 
 </html>
+
 
 
 
