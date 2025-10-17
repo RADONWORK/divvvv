@@ -415,9 +415,8 @@ body > .bee-page-container {position:relative;z-index:1}
 body > .bee-page-container {padding-bottom:0 !important}
 </style>
 <!-- Points Table Popup Styles -->
-<!-- Points Table Popup Styles -->
 <style>
-  /* Apple‑inspired trigger button */
+  /* Apple‑inspired trigger button with 3D depth */
   .glass-button {
     padding: 0.9rem 2rem;
     font-size: 1rem;
@@ -426,23 +425,28 @@ body > .bee-page-container {padding-bottom:0 !important}
     border-radius: 12px;
     cursor: pointer;
     color: #fff;
-    background: rgba(255, 255, 255, 0.08); /* subtle frosted look */
+    background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25),
-                inset 0 0 0 0.5px rgba(255,255,255,0.4);
+    box-shadow:
+      0 6px 12px rgba(0,0,0,0.4),
+      0 2px 4px rgba(0,0,0,0.3),
+      inset 0 1px 2px rgba(255,255,255,0.25);
     transition: all 0.25s ease;
   }
   .glass-button:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.3),
-                inset 0 0 0 0.5px rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 20px rgba(0,0,0,0.45),
+      0 4px 8px rgba(0,0,0,0.35),
+      inset 0 1px 2px rgba(255,255,255,0.3);
   }
   .glass-button:active {
-    transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25),
-                inset 0 0 0 0.5px rgba(255,255,255,0.4);
+    transform: translateY(1px) scale(0.98);
+    box-shadow:
+      0 3px 6px rgba(0,0,0,0.4),
+      inset 0 2px 4px rgba(0,0,0,0.4);
   }
 
   /* Popup overlay */
@@ -529,25 +533,34 @@ body > .bee-page-container {padding-bottom:0 !important}
     100% { transform: translateY(0); }
   }
 
-  /* Close button styled like Apple secondary button */
+  /* Close button styled consistently */
   .close-btn {
     margin-top: 1rem;
     width: 100%;
     padding: 0.9rem;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.12);
     border: none;
     border-radius: 12px;
     font-weight: 600;
     color: #fff;
     cursor: pointer;
     transition: all 0.25s ease;
+    box-shadow:
+      0 4px 10px rgba(0,0,0,0.35),
+      inset 0 1px 2px rgba(255,255,255,0.25);
   }
   .close-btn:hover {
     background: rgba(255,255,255,0.18);
     transform: translateY(-1px);
+    box-shadow:
+      0 6px 14px rgba(0,0,0,0.4),
+      inset 0 1px 2px rgba(255,255,255,0.3);
   }
   .close-btn:active {
-    transform: scale(0.98);
+    transform: translateY(1px) scale(0.98);
+    box-shadow:
+      0 2px 6px rgba(0,0,0,0.35),
+      inset 0 2px 4px rgba(0,0,0,0.4);
   }
 
   /* Mobile tweaks */
@@ -2794,6 +2807,7 @@ function filterEvents(searchTerm) {
 </body>
 
 </html>
+
 
 
 
