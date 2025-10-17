@@ -699,9 +699,12 @@ body > .bee-page-container {padding-bottom:0 !important}
 							<img alt="Parichay Logo" src="https://res.cloudinary.com/duslhfphv/image/upload/v1760205040/logo_final.png_COPY_2_RESIZED_dywpug.png" />
 						</div>
 <!-- Points Table Trigger Button -->
-<div style="text-align:center; margin:20px 0;">
-  <button class="glass-button" onclick="openPointsPopup()">View Points Table</button>
+<div style="text-align:center; margin:20px 0; position: relative; z-index: 1001;">
+  <button class="glass-button" onclick="openPointsPopup()" style="position: relative; z-index: 1002;">
+    View Points Table
+  </button>
 </div>
+
 						
 <!-- Search & Filter Bar -->
 <div id="searchContainer" style="text-align: center; margin: 40px 0;">
@@ -2671,6 +2674,7 @@ function filterEvents(searchTerm) {
 </body>
 
 </html>
+
 
 
 
